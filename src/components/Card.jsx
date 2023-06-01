@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Card = () => {
+const Card = ({nombre}) => {
   return (
-    <div>Hola , soy una tarjeta</div>
+
+    <h1> Hola {nombre} </h1>
+    
   )
 }
 
