@@ -3,6 +3,7 @@ import { useState } from 'react'
 import './App.css'
 import Card from './components/Card'
 
+
 function App() {
 
   // use state colocacion
@@ -10,32 +11,57 @@ function App() {
   const [pais, setPais] = useState("");
   const [edad, setEdad] = useState (0);
   const [cancion, setCancion] = useState("");
-  const [libro, setLibro] =useState("");
-
+  const [libro, setLibro] = useState("");
+  const [error, setError] = useState("");
+  const [mostrar, setMostrar] = useState(false);
+ 
   // Onchange declaradas
 
-  const OnchangeNombre = (e) => setNombre(e.target.value);
-  const OnchangePais = (e) => setPais(e.target.value);
-  const OnchangeEdad = (e) => setEdad(e.target.value);
-  const OnchangeCancion = (e) => setCancion(e.target.value);
-  const OnchangeLibro = (e) => setLibro(e.target.value);
-  
+  const onChangeNombre = (e) => setNombre(e.target.value);
+  const onChangePais = (e) => setPais(e.target.value);
+  const onChangeEdad = (e) => setEdad(e.target.value);
+  const onChangeCancion = (e) => setCancion(e.target.value);
+  const onChangeLibro = (e) => setLibro(e.target.value);
 
 
+  // definimos test de verificacion
+const primerValidacion=()=>{
+
+  //console.log(nombreNoSpacios);
+  if(nombre.length<3 && nombre != "") {
+    return true;
+
+} else {
+  return false
+}
+}
+
+const segundaValidacion =()=>{
+
+  if(libro.length < 6 ) {
+    return true;
+  } else {
+ return false
+}
+}
+
+ 
+
+ 
 // se coloca el handle submit 
   const handleSubmit = (event) =>{
     event.preventDefault();
 
-    if(nombre.length <= 3) {
-      if(libro.length >= 6) {
-      alert("Por favor chequea que la información sea correcta");
-      }
-    } else {
-      alert ("Enviando");
-      
-    }
-  }
+   // console.log(primerValidacion);
+    //console.log(segundaValidacion);
 
+    if(primerValidacion == true && segundaValidacion == true ){
+      setError("Por favor chequea que la información sea correcta");
+     
+      
+    } else {
+      setMostrar(true);
+  };
 
   
 
@@ -51,8 +77,9 @@ function App() {
           type='text'
           placeholder='Escribe tu nombre'
           value={nombre}
-          onChange = {OnchangeNombre}
+          onChange = {onChangeNombre}
           />
+      
 
            <br></br>
 
@@ -61,7 +88,7 @@ function App() {
           type='text'
           placeholder='Escribe tu pais'
           value={pais}
-          onChange = {OnchangePais}
+          onChange = {onChangePais}
           />
           <br></br>
 
@@ -70,7 +97,7 @@ function App() {
           type='number'
           placeholder='Escribe tu edad'
           value={edad}
-          onChange = {OnchangeEdad}
+          onChange = {onChangeEdad}
           />
           
           <br></br>
@@ -80,36 +107,40 @@ function App() {
           type='text'
           placeholder='Coloca tu cancion favorita'
           value={cancion}
-          onChange = {OnchangeCancion}
+          onChange = {onChangeCancion}
           />
 
           <br></br>
 
-          <label> Coloca tu libro favorito:  {" "} </label>
+          <label> Coloca tu libro favorito:  {" "} 
           <input 
           type='text'
           placeholder='Escribe tu libro'
           value={libro}
-          onChange = {OnchangeLibro}
+          onChange = {onChangeLibro}
           />
-
-          <br></br>
-
-          <button className='button'
-              onClick={()=>{
-                setNombre(nombre)}}>
-
+          </label>
+        
+      <div className="error">
+        <p>{error}</p>
+        </div>
+      
+          <button type='submit'>
               Enviar
           </button>
-          
-          <p>Tu nombre es {nombre} </p>
 
         </form>
+
+        {(mostrar == true)? <Card nombre={nombre} libro={libro}/> : null}
+
        
         
       </div>
     </>
   )
+
+}
+
 }
 
 export default App
